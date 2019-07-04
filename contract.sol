@@ -1,21 +1,17 @@
- pragma solidity ^0.4.18;
+pragma solidity ^0.4.18;
 
-contract Owned {
-    address owner;
+
+contract Onecontract  {
     
-    function Owned() public {
-        owner = msg.sender;
+    struct Node {
+        address p_address;
+        address lb_address;
+        address rb_address;
+        address descendant;
+        
     }
     
-   modifier onlyOwner {
-       require(msg.sender == owner);
-       _;
-   }
-}
-
-contract Producer is Owned {
-    
-   
+       
      struct Instructor{
        bytes16 foodwhere;
        uint quantity;
@@ -23,17 +19,35 @@ contract Producer is Owned {
        uint ph;
        uint sensor1;
     }
+    
+   
    
        mapping (address => Instructor) instructors;
+       mapping (address => Node) nodes;
+
        address[] public instructorAccts;
+       address[]public  parentnew;
+       address[]public  descendantnew;
+
 
     event instructorInfo(
        bytes16 foodwhere,
        bytes16 foodtype,
-       uint quantity
+       uint quantity,
+       address iaddress
     );
     
-   function setInstructor(address _address, bytes16 _foodwhere, uint _quantity, bytes16 _foodtype, uint _ph, uint _sensor1) public {
+   function setInstructor(address p_address, address lb_address, bytes16 _foodwhere, uint _quantity, bytes16 _foodtype, uint _ph, uint _sensor1) public {
+
+
+        bytes20 b = bytes20(keccak256(_foodwhere,_quantity));
+        uint addr = 0;
+        for (uint index = b.length-1; index+1 > 0; index--) {
+            addr += uint(b[index]) * ( 16 ** ((b.length - index - 1) * 2));
+        }
+
+    address _address= address(addr);
+
      var instructor = instructors[_address];
 
         instructor.foodwhere = _foodwhere;
@@ -43,62 +57,56 @@ contract Producer is Owned {
         instructor.quantity = _quantity;
         instructorAccts.push(_address) -1;
 
-        instructorInfo(_foodwhere, _foodtype, _quantity);
+     var  node=nodes[_address];
+       node.p_address=p_address;
+       node.descendant=0x0000000000000000000000000000000000000000;
+       node.rb_address=0x0000000000000000000000000000000000000000;
+       node.lb_address=lb_address;
+
+
+    if (nodes[p_address].descendant == 0x0000000000000000000000000000000000000000){
+            nodes[p_address].descendant=_address;
+       }
+       else{
+           nodes[lb_address].rb_address= _address;
+       }
+        instructorInfo(_foodwhere, _foodtype, _quantity, _address);
    }
-       
+   
     function getInstructors() view public returns(address[]) {
         return instructorAccts;
-    }
-   
-   function getInstructor(address _address) view public returns (bytes16 , uint , bytes16 , uint , uint ) {
-       return (instructors[_address].foodwhere, instructors[_address].quantity, instructors[_address].foodwhere, instructors[_address].ph, instructors[_address].sensor1);
+    }    
+
+   function getInstructor(address _address) public  {
+       address parent = nodes[_address].p_address;
+       uint i=0;
+
+       while(parent != 0x0000000000000000000000000000000000000000){
+        parentnew.push(parent) -1;
+        i++;
+        parent = nodes[parent].p_address;
+        } 
    }
     
-}
-
-contract Distributor is Producer{
-    
-    struct HubInstructor {
-        bytes16 distributorwhere;
-        uint distributorquantity;
-        address _address;
+     function gettree(address _address)  view public returns(address[]) {
+        getInstructor(_address);
+        return parentnew;
     }
     
-    mapping (address => HubInstructor) distributors;
-    address[] public distributorAccts;
+       function getInstructors(address _address) public  {
+       address descendant = nodes[_address].descendant;
+       uint i=0;
 
-    event HubinstructorInfo(
-       bytes16 distributorwhere,
-       uint distributorquantity,
-       address _address
-    );
+       while(descendant != 0x0000000000000000000000000000000000000000){
+        descendantnew.push(descendant) -1;
+        i++;
+        descendant = nodes[descendant].descendant;
+        } 
+   }
     
-    
-   
-    
-    function setHubInstructor (address _naddress, bytes16 _distributorwhere, uint _distributorquantity, address _oaddress) onlyOwner public {
-        var distributor = distributors[_naddress];
-        
-        distributor.distributorwhere = _distributorwhere;
-        distributor.distributorquantity = _distributorquantity;
-        distributorAccts.push(_naddress) -1;
-        distributor._address = _oaddress;
-        
-        HubinstructorInfo(_distributorwhere, _distributorquantity, _oaddress);
-
-    }
-
-        function getHubInstructor() view public returns (address[]) {
-        return distributorAccts;
-    }
-
-    function getHubInstructor1(address _naddress) view public returns (address, bytes16, bytes16, uint, uint) {
-        return (distributors[_naddress]._address, instructors[distributors[_naddress]._address].foodwhere, instructors[distributors[_naddress]._address].foodtype, instructors[distributors[_naddress]._address].ph, instructors[distributors[_naddress]._address].sensor1);
-        
-        
-    }
-    
-        function countHubInstructor() view public returns (uint) {
-        return instructorAccts.length;
+   function getdescendant(address _address)  view public returns(address[]) {
+        getInstructors(_address);
+        return descendantnew;
     }
 }
+    
