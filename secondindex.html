@@ -291,7 +291,7 @@
 
         $("#button").click(function() {
             Distributor.setInstructor($("#_address").val(),$("#_lbaddress").val(), $("#distributorwhere").val(), $("#distributorquantity").val(), '','','',function (err, result) {
-  console.log(err, result);}).send();});
+  console.log(err, result);});});
  // { from: web3.eth.defaultAccount, gas: 300000 });
 	var hubinstructorEvent = Distributor.instructorInfo({},'latest');
 		
