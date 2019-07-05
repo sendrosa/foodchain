@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Foodchain</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+</head>
+<body>
+
+		<ul>
+				<li class="dropdown">
+						<a href="javascript:void(0)" class="dropbtn">Menu</a>
+						<div class="dropdown-content">
+						  <a href="index.html">Foodchain 1st Instructor</a>
+						  <a href="secondindex.html">Foodchain 2st Instructor</a>
+						  <a href="search.html">Search</a>
+						</div>
+					  </div> 
+			
+					</li>
+				</li>
+			</ul>
+		
+    <div class="container">
+
+        <h1>Foodchain 2st Instructor</h1>
+
+        <h2 id="instructor"></h2>
+		<span id="insTrans"></span>
+		
+		<hr>
+		<span id="insTrans2"></span>
+        <hr>
+	   
+        <label for="name" class="col-lg-2 control-label" >Parent Address</label>
+        <input id="_address" type="text" placeholder="Εισάγεται την διεύθυνση που αντιγράψατε πχ 0xae71a01f80b2d8b29096485a43574946631f31a9">
+		
+		<label for="name" class="col-lg-2 control-label" >Brother Address</label>
+        <input id="_lbaddress" type="text" placeholder="Εισάγεται αν έχει ήδη δημιουργηθεί άλλο υποπροϊόν πχ 0xae71a01f80b2d8b29096485a43574946631f31a9">
+
+        <label for="name" class="col-lg-2 control-label" >Foodwhere</label>
+        <input id="distributorwhere" type="text" placeholder="Τόπος μεταφοράς παρτίδας πχ Kavala">
+
+        <label for="name" class="col-lg-2 control-label">Quantity</label>
+		<input id="distributorquantity" type="text" placeholder="Ποσότητα παρτίδας πχ 10">
+		
+		<br>
+
+		<button id="button">Update Instructor</button>
+		
+		
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+      	if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            // set the provider you want from Web3.providers
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        }
+
+		var accountInterval = setInterval(function() {
+  // Check if account has changed
+  if (web3.eth.accounts[0] !== web3.eth.defaultAccount) {
+    web3.eth.defaultAccount = web3.eth.accounts[0];
+    // Call some function to update the UI with the new account
+    updateInterface();
+  }
+}, 100);
+
+		
+        
+        var DistributorContract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getInstructor",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getInstructors",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "descendantnew",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getInstructors",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getdescendant",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "instructorAccts",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "parentnew",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "gettree",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "p_address",
+				"type": "address"
+			},
+			{
+				"name": "lb_address",
+				"type": "address"
+			},
+			{
+				"name": "_foodwhere",
+				"type": "bytes16"
+			},
+			{
+				"name": "_quantity",
+				"type": "uint256"
+			},
+			{
+				"name": "_foodtype",
+				"type": "bytes16"
+			},
+			{
+				"name": "_ph",
+				"type": "uint256"
+			},
+			{
+				"name": "_sensor1",
+				"type": "uint256"
+			}
+		],
+		"name": "setInstructor",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "foodwhere",
+				"type": "bytes16"
+			},
+			{
+				"indexed": false,
+				"name": "foodtype",
+				"type": "bytes16"
+			},
+			{
+				"indexed": false,
+				"name": "quantity",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "iaddress",
+				"type": "address"
+			}
+		],
+		"name": "instructorInfo",
+		"type": "event"
+	}
+]);
+        var Distributor = DistributorContract.at('0x533fdcd6f727912f367ab1a6c112c3b4345b8498');
+        console.log(Distributor);
+		
+		
+	
+
+        $("#button").click(function() {
+            Distributor.setInstructor($("#_address").val(),$("#_lbaddress").val(), $("#distributorwhere").val(), $("#distributorquantity").val(), '','','',function (err, result) {
+  console.log(err, result);}).send();});
+ // { from: web3.eth.defaultAccount, gas: 300000 });
+	var hubinstructorEvent = Distributor.instructorInfo({},'latest');
+		
+		hubinstructorEvent.watch(function (err, result) {
+    if (!err) {
+        if (result.blockHash != $("#instrans").html()) 
+            
+        $("#insTrans").html('Block hash: ' +result.blockHash +'\n Address:' +result.args.iaddress );
+        $("#instructor").html(web3.toAscii(result.args.foodwhere) + ' ' + result.args.quantity+ ' '  );
+    } 
+});
+    </script>
+
+</body>
+
+</html>
