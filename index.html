@@ -295,7 +295,7 @@
 
         $("#button").click(function() {
             Onecontract.setInstructor('0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000000000', $("#foodwhere").val(), $("#quantity").val(), $("#foodtype").val(), $("#ph").val(), $("#sensor1").val(), function (err, result) {
-  console.log(err, result);}).send();});
+  console.log(err, result);});});
 //, { from: web3.eth.defaultAccount, gas: 300000 }
 		var instructorEvent = Onecontract.instructorInfo({},'latest');
 
