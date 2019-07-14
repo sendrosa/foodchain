@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Foodchain</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h2>Foodchain</h2>
+  <p>Supply chain traceability system. Follow the instructions</p>
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link " href="index.html">Production</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="secondindex.html">Distribution</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="search.html">Search</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="data.html">Data Table</a>
+    </li>
+    <nav class="navbar navbar-expand-sm bg  navbar">
+            <form class="form-inline" action="/action_page.php">
+              <input class="form-control mr-sm-2" type="text" placeholder="Search">
+              <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+          </nav> 
+  </ul>
+</div>
+<div class="container">
+    <br/>
+   
+    <p>Σύνολο δεδομένων προμηθειών</p>            
+    <table class="table table">
+      <thead>
+        <tr>
+          <th>Address</th>
+          <th>Provenance</th>
+          <th>Quantity</th>
+          <th>Type</th>
+          <th>PH</th>
+          <th>Sensor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0x533fdcd6f727912f367ab1a6c112c3b4345b8498</td>
+          <td>Athens</td>
+          <td>1000</td>
+          <td>Meatballs</td>
+          <td>6</td>      
+          <td>15</td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
