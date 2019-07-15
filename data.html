@@ -28,9 +28,9 @@
       <a class="nav-link active" href="data.html">Data Table</a>
     </li>
     <nav class="navbar navbar-expand-sm bg  navbar">
-            <form class="form-inline" action="/action_page.php">
-              <input class="form-control mr-sm-2" type="text" placeholder="Search">
-              <button class="btn btn-primary" type="submit">Search</button>
+            <form class="form-inline" >
+              <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search the table.." title="Type in a name">
+
             </form>
           </nav> 
   </ul>
@@ -46,22 +46,15 @@
           <th>Provenance</th>
           <th>Quantity</th>
           <th>Type</th>
-          <th>PH</th>
-          <th>Sensor</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>0x533fdcd6f727912f367ab1a6c112c3b4345b8498</td>
-          <td>Athens</td>
-          <td>1000</td>
-          <td>Meatballs</td>
-          <td>6</td>      
-          <td>15</td>
-
-        </tr>
-      </tbody>
+      <tbody id="tasks">
+        
+        </tbody>
     </table>
   </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="datascript.js"></script>  
+
 </body>
 </html>

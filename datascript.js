@@ -1,38 +1,23 @@
-$('#results').hide();
-$("#insTrans1").hide();
-$("#insTrans2").hide();
+if (typeof web3 !== 'undefined') {
+    web3 = new Web3(web3.currentProvider);
+} else {
+    // set the provider you want from Web3.providers
+    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+}
 
-window.addEventListener('load', function () {
-
-    // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-    if (typeof web3 !== 'undefined') {
-        // Use Mist/MetaMask's provider
-        web3js = new Web3(web3.currentProvider);
-    } else {
-        console.log('No web3? You should consider trying MetaMask!')
-        // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-        web3js = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-    }
-
-
-
-})
-
-var account = web3.eth.accounts[0];
-var accountInterval = setInterval(function () {
-    if (web3.eth.accounts[0] !== account) {
-        account = web3.eth.accounts[0];
-    }
+var accountInterval = setInterval(function() {
+// Check if account has changed
+if (web3.eth.accounts[0] !== web3.eth.defaultAccount) {
+web3.eth.defaultAccount = web3.eth.accounts[0];
+// Call some function to update the UI with the new account
+updateInterface();
+}
 }, 100);
 
 window.ethereum.enable();
 
 
-console.log(web3.eth.accounts[0]);
-
-
-
-var FoodchainContract = web3.eth.contract([
+var DistributorContract = web3.eth.contract([
 	{
 		"constant": true,
 		"inputs": [
@@ -267,34 +252,38 @@ var FoodchainContract = web3.eth.contract([
 		"type": "event"
 	}
 ]);
-var Foodchain = FoodchainContract.at('0x5838272e2fd45be433c0e9fd552c0c20cb6820e7');
-console.log(Foodchain);
+
+var Distributor = DistributorContract.at('0x5838272e2fd45be433c0e9fd552c0c20cb6820e7');
 
 
 
 
-$("#button").click(function () {
-    Foodchain.setInstructor('0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000000000', $("#foodwhere").val(), $("#quantity").val(), $("#foodtype").val(), $("#ph").val(), $("#sensor1").val(), { from: account }, function (err, result) {
-        console.log(err, result)
-    });
-    $('#results').show();
-
-});
-//, { from: web3.eth.defaultAccount, gas: 300000 }    web3.eth.defaultAccount = web3.eth.accounts[0];
-
-var instructorEvent = Foodchain.instructorInfo({}, 'latest');
-
-instructorEvent.watch(function (err, result) {
+for (let i=1; i<=Distributor.instructorInfo.length;i++){
+var values= Distributor.getData(i,function (err, result) {
+    var table = document.getElementById("tasks");
+    var row = table.insertRow(0);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
     
-    if (result) {
-        if (result.blockHash != $("#instrans").html())
-            $('#wait1').hide();
-            $('#wait2').hide();
-            $("#insTrans1").show();
-            $("#insTrans2").show();
-            
-        $("#insTrans").html('Block hash: ' + result.blockHash);
-        $("#insTrans2").html('\n Address:' + result.args.iaddress);
-        $("#instructor").html(web3.toAscii(result.args.foodwhere) + ' ' + web3.toAscii(result.args.foodtype) + ' ' + result.args.quantity + ' ');
-    }
+    
+    cell1.innerHTML=result[3];
+    cell2.innerHTML=web3.toAscii((result[0]));
+    cell3.innerHTML=result[2];
+    cell4.innerHTML=web3.toAscii((result[1]));
+
+
 });
+
+ }
+
+ $(document).ready(function(){
+    $("#myInput").on("keyup", function() {
+      var value = $(this).val().toLowerCase();
+      $("#tasks tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
+  
