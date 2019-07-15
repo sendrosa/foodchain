@@ -258,25 +258,32 @@ var Distributor = DistributorContract.at('0x5838272e2fd45be433c0e9fd552c0c20cb68
 
 
 
-for (let i=1; i<=Distributor.instructorInfo.length;i++){
-var values= Distributor.getData(i,function (err, result) {
-    var table = document.getElementById("tasks");
-    var row = table.insertRow(0);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3);
-    
-    
-    cell1.innerHTML=result[3];
-    cell2.innerHTML=web3.toAscii((result[0]));
-    cell3.innerHTML=result[2];
-    cell4.innerHTML=web3.toAscii((result[1]));
+var items;
+var data = Distributor.getInstructors(function (err, result) {
+	items=result.length;
 
 
+
+	for (let i = 1; i <= items; i++) {
+		var values = Distributor.getData(i, function (err, result) {
+			var table = document.getElementById("tasks");
+			var row = table.insertRow(0);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+			var cell4 = row.insertCell(3);
+
+
+			cell1.innerHTML = result[3];
+			cell2.innerHTML = web3.toAscii((result[0]));
+			cell3.innerHTML = result[2];
+			cell4.innerHTML = web3.toAscii((result[1]));
+
+
+		});
+
+	}
 });
-
- }
 
  $(document).ready(function(){
     $("#myInput").on("keyup", function() {
