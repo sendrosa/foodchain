@@ -2,13 +2,16 @@ $('#other').hide();
 $('#results').hide();
 $("#insTrans1").hide();
 $("#insTrans2").hide();
+var flag;
 
 $("#switch1").change(function(){
 if($(this).prop("checked") == true){
 $('#other').show();
-_lbaddress='0x0000000000000000000000000000000000000000';
+flag=0;
 }else{
 $('#other').hide();
+flag=1;
+
 }});
 
 if (typeof web3 !== 'undefined') {
@@ -78,12 +81,50 @@ var DistributorContract = web3.eth.contract([
 	},
 	{
 		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "dbrother",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
 		"inputs": [],
 		"name": "getInstructors",
 		"outputs": [
 			{
 				"name": "",
 				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "brother",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
 			}
 		],
 		"payable": false,
@@ -133,6 +174,10 @@ var DistributorContract = web3.eth.contract([
 		],
 		"name": "getdescendant",
 		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			},
 			{
 				"name": "",
 				"type": "address[]"
@@ -190,6 +235,41 @@ var DistributorContract = web3.eth.contract([
 		],
 		"name": "gettree",
 		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getgraph",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"name": "",
+				"type": "address[]"
+			},
 			{
 				"name": "",
 				"type": "address[]"
@@ -265,15 +345,21 @@ var DistributorContract = web3.eth.contract([
 		"type": "event"
 	}
 ]);
-var Distributor = DistributorContract.at('0x5838272e2fd45be433c0e9fd552c0c20cb6820e7');
+var Distributor = DistributorContract.at('0x94ab12684b94698e91e421260085405292e46349');
 console.log(Distributor);
 
 
 
-
 $("#button").click(function() {
-    Distributor.setInstructor($("#_address").val(),$("#_lbaddress").val(), $("#distributorwhere").val(), $("#distributorquantity").val(), '','','',function (err, result) {
-console.log(err, result);});
+if (flag==1){
+	Distributor.setInstructor($("#_address").val(),'0x0000000000000000000000000000000000000000', $("#distributorwhere").val(), $("#distributorquantity").val(), '','','',function (err, result) {
+		console.log(err, result);});
+}
+else {
+	Distributor.setInstructor($("#_address").val(),$("#_lbaddress").val(), $("#distributorwhere").val(), $("#distributorquantity").val(), '','','',function (err, result) {
+		console.log(err, result);});
+}
+
 $('#results').show();
 });
 // { from: web3.eth.defaultAccount, gas: 300000 });

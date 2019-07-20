@@ -65,12 +65,50 @@ var DistributorContract = web3.eth.contract([
 	},
 	{
 		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "dbrother",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
 		"inputs": [],
 		"name": "getInstructors",
 		"outputs": [
 			{
 				"name": "",
 				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "brother",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
 			}
 		],
 		"payable": false,
@@ -120,6 +158,10 @@ var DistributorContract = web3.eth.contract([
 		],
 		"name": "getdescendant",
 		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			},
 			{
 				"name": "",
 				"type": "address[]"
@@ -177,6 +219,41 @@ var DistributorContract = web3.eth.contract([
 		],
 		"name": "gettree",
 		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getgraph",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"name": "",
+				"type": "address[]"
+			},
 			{
 				"name": "",
 				"type": "address[]"
@@ -253,7 +330,7 @@ var DistributorContract = web3.eth.contract([
 	}
 ]);
 
-var Distributor = DistributorContract.at('0x5838272e2fd45be433c0e9fd552c0c20cb6820e7');
+var Distributor = DistributorContract.at('0x94ab12684b94698e91e421260085405292e46349');
 
 
 

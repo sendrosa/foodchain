@@ -30,20 +30,28 @@
   </div>
   <div class="container">
         <br/>
-  
+     
     <form>
       <div class="card border-primary mb-3" id="results" >
         <div class="card-header">Results</div>
         <div class="card-body text">
             <h5 class="card-title" id="wait1">Search result</h5>
-            <span id="insTrans" ></span>   
-
+           <span id="insTrans" ></span>           
         </div>
       </div>
+      <div class="card border-primary mb-3" id="graph" >
+          <div class="card-header">Graph</div>
+          <div class="card-body">
+  
+      <div  id="container1"></div>
+    </div>
+  </div>
         <div class="form-group">
           <label for="name">Address</label>
           <input type="text" class="form-control" id="_address" placeholder="Εισάγεται την διεύθυνση για αναζητηση πχ 0xae71a01f80b2d8b29096485a43574946631f31a9">
         </div>
+        
+
         <div class="custom-control custom-radio custom-control-inline">
                 <input type="radio" class="custom-control-input" id="customRadio" name="example" value="1">
                 <label class="custom-control-label" for="customRadio">Descendants</label>
@@ -61,9 +69,22 @@
 
         <button type="button" class="btn btn-primary" id="button">Search</button>
     </form>
+    
+        <style type="text/css">
+          #container1 {
+             position: relative;
+             width: 100%;
+  height: 400px;
+           }
+        </style>
+   
+
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="sigma.js/build/plugins/sigma.parsers.json.min.js"></script>  
+<script src="sigma.js/build/sigma.require.js"></script>
 <script src="search.js"></script>  
+
 
 </body>
 </html>
