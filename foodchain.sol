@@ -30,6 +30,7 @@ contract Onecontract  {
        address[]public  parentnew;
        address[]public  descendantnew;
        address[]public  brother;
+       address[]public  dbrother;
 
 
 
@@ -67,7 +68,7 @@ contract Onecontract  {
             nodes[p_address].descendant=_address;
        }
        else{
-           nodes[lb_address].rb_address= _address;
+           nodes[lb_address].rb_address=_address;
        }
         instructorInfo(_foodwhere, _foodtype, _quantity, _address);
    }
@@ -83,32 +84,28 @@ contract Onecontract  {
 
    function getInstructor(address _address) public  {
        address parent = nodes[_address].p_address;
-       address lb = nodes[_address].lb_address;
-       address rb = nodes[_address].rb_address;
+       
 
-       uint i=0;
-       uint j=0;
-       uint e=0;
+      
 
        while(parent != 0x0000000000000000000000000000000000000000){
         parentnew.push(parent) -1;
-        brother.push(parent) -1;
+        address lb = nodes[parent].lb_address;
+       address rb = nodes[parent].rb_address;
+        if (lb!=0x0000000000000000000000000000000000000000 || rb!=0x0000000000000000000000000000000000000000) brother.push(parent) -1;
          while (lb != 0x0000000000000000000000000000000000000000){
                 brother.push(lb) -1;     
-                e++;
                 lb = nodes[lb].lb_address;
             
         }
-        brother.push(2) -1;
+        
 
         while (rb != 0x0000000000000000000000000000000000000000){
                 brother.push(rb) -1;     
-                j++;
                 rb = nodes[rb].rb_address;
             
         }
-    
-        i++;
+        brother.push(0x9000000000000000000000000000000000000000)-1;
         parent = nodes[parent].p_address;
         } 
    }
@@ -120,24 +117,36 @@ contract Onecontract  {
     
        function getInstructors(address _address) public  {
        address descendant = nodes[_address].descendant;
-       uint i=0;
 
        while(descendant != 0x0000000000000000000000000000000000000000){
         descendantnew.push(descendant) -1;
-        i++;
+        address lb = nodes[descendant].lb_address;
+       address rb = nodes[descendant].rb_address;
+        if (lb!=0x0000000000000000000000000000000000000000 || rb!=0x0000000000000000000000000000000000000000) dbrother.push(descendant) -1;
+         while (lb != 0x0000000000000000000000000000000000000000){
+                dbrother.push(lb) -1;     
+                lb = nodes[lb].lb_address;
+            
+        }
+        while (rb != 0x0000000000000000000000000000000000000000){
+                dbrother.push(rb) -1;     
+                rb = nodes[rb].rb_address;
+            
+        }
+        dbrother.push(0x9000000000000000000000000000000000000000)-1;
         descendant = nodes[descendant].descendant;
         } 
    }
     
-   function getdescendant(address _address)  view public returns(address[]) {
+   function getdescendant(address _address)  view public returns(address[], address[]) {
         getInstructors(_address);
-        return descendantnew;
+        return (descendantnew, dbrother);
     }
     
-    function getgraph(address _address)  view public returns(address[], address[]) {
+    function getgraph(address _address)  view public returns(address[], address[], address[], address[]) {
         getInstructors(_address);
         getInstructor(_address);
 
-        return (descendantnew, parentnew);
+        return (descendantnew, parentnew, brother, dbrother);
     }
 }
