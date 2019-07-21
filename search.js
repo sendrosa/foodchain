@@ -356,6 +356,7 @@ console.log(Distributor);
                 console.log(err, result);
 								var i,text=" ";
 								
+								text += $("#_address").val() + "<br>";
 
 								for (var i = 0; j < result[i].length; j++) {
 									console.log(result[0][i])
@@ -384,8 +385,8 @@ console.log(Distributor);
 												g.nodes.push({
 													id: 'b' +result[1][j],
 													label: result[1][j],
-													x: result[1].length-j,
-													y: result[0].length-i,
+													x: result[1].length+j,
+													y: result[0].length+i,
 													size: 3,
 													color: '#666'
 												});	
@@ -404,8 +405,8 @@ console.log(Distributor);
 										g.nodes.push({
 											id: 'n'+result[0][i],
 											label: result[0][i],
-											x: result[0].length-i,
-											y: result[0].length-i,
+											x: result[0].length+i,
+											y: result[0].length+i,
 											size: 3,
 											color: '#666'
 										});
@@ -419,6 +420,23 @@ console.log(Distributor);
 										});
 										}
 							} 
+							g.nodes.push({
+								id: 'n'+$("#_address").val(),
+								label: $("#_address").val() ,
+								x: result[0].length-1,
+								y: result[0].length-1,
+								size: 3,
+								color: '#eb4034'
+							});
+							if (result[0][0]!=''){
+							g.edges.push({
+								id:  $("#_address").val(),
+								source:'n'+$("#_address").val(),
+								target:'n'+ result[0][0],
+								size: Math.random(),
+								color: '#ccc'
+							});
+						}
 							s = new sigma({
 								graph: g,
 								container: 'container1'
@@ -427,12 +445,14 @@ console.log(Distributor);
 						});
 						
         }
-      else {
+      else if (radioValue==2) {
         	var value = Distributor.gettree($("#_address").val(), function (err, result) {
             console.log(err, result);
 					var i,text=" " ;
 					for (var j = 0; j < result[1].length; j++) {
 					console.log(result[1][j]);}
+					text += $("#_address").val() + "<br>";
+
 					for (i = 0; i < result[0].length; i++) {
 						text += result[0][i] + "<br>";
 			  		var temp=-1;
@@ -489,12 +509,195 @@ console.log(Distributor);
 						});
 						}
 			} 
+			g.nodes.push({
+				id: 'n'+$("#_address").val(),
+				label: $("#_address").val() ,
+				x: result[0].length+2,
+				y: result[0].length+2,
+				size: 3,
+				color: '#eb4034'
+			});
+			if (result[0][0]!=''){
+			g.edges.push({
+				id:  $("#_address").val(),
+				source:'n'+$("#_address").val(),
+				target:'n'+ result[0][0],
+				size: Math.random(),
+				color: '#ccc'
+			});
+			
+		}
 			s = new sigma({
 				graph: g,
 				container: 'container1'
 			  });
 			document.getElementById("insTrans").innerHTML=text;
-		});
+		});	
+	 }
+	 else{
+				var value = Distributor.getgraph($("#_address").val(), function (err, result) {
+					console.log(err, result);
+				var i,text=" " ;
+
+				for (i = 0; i < result[1].length; i++) {
+					text += result[1][i] + "<br>";
+					var temp=-1;
+					
+								
+					for (var j=0; j< result[2].length; j++ ){
+						if (result[1][i]==result[2][j]){
+							temp=j;
+							break;
+						}							
+					}
+					
+					if(temp!=-1){
+						for (var j=temp+1; j< result[2].length; j++ ){
+							if (i+1<result[1].length && result[2][j]=='0x9000000000000000000000000000000000000000'){
+									break;
+							}
+							text +=  "&nbsp &nbsp &nbsp" + result[2][j] + "<br>";
+							g.nodes.push({
+								id: 'b' +result[2][j],
+								label: result[2][j],
+								x: result[2].length-j,
+								y: result[1].length-i,
+								size: 3,
+								color: '#666'
+							});	
+							if (j>=1) {	
+								g.edges.push({
+								id: result[2][j],
+								source: 'n'+result[1][i+1],
+								target:  'b'+result[2][j],
+								size: Math.random(),
+								color: '#ccc'
+							});
+							}													
+						}
+					}
+
+					g.nodes.push({
+						id: 'n'+result[1][i],
+						label: result[1][i],
+						x: result[1].length-i,
+						y: result[1].length-i,
+						size: 3,
+						color: '#666'
+					});
+					if (i>=1) {	
+						g.edges.push({
+						id:  result[1][i],
+						source:'n'+result[1][i-1],
+						target:'n'+ result[1][i],
+						size: Math.random(),
+						color: '#ccc'
+					});
+					}
+		} 
+
+
+				text += $("#_address").val() + "<br>";
+
+				for (var i = 0; j < result[i].length; j++) {
+					console.log(result[0][i])
+					;}
+
+
+					for (i = 0; i < result[0].length; i++) {
+						text += result[0][i] + "<br>";
+						var temp=-1;
+						
+																		console.log(result[0][i])
+
+						for (var j=0; j< result[3].length; j++ ){
+							if (result[0][i]==result[3][j]){
+								temp=j;
+								break;
+							}							
+						}
+						
+						if(temp!=-1){
+							for (var j=temp+1; j< result[3].length; j++ ){
+								if (i+1<result[0].length || result[3][j]=='0x9000000000000000000000000000000000000000'){
+										break;
+								}
+								text +=  "&nbsp &nbsp &nbsp" + result[3][j] + "<br>";
+								g.nodes.push({
+									id: 'b' +result[3][j],
+									label: result[3][j],
+									x: result[3].length-j,
+									y: result[0].length-i,
+									size: 3,
+									color: '#666'
+								});	
+								if (i>=1) {	
+									g.edges.push({
+									id: result[3][j],
+									source: 'n'+result[0][i-1],
+									target:  'b'+result[3][j],
+									size: Math.random(),
+									color: '#ccc'
+								});
+								}													
+							}
+						}
+
+						g.nodes.push({
+							id: 'n'+result[0][i],
+							label: result[0][i],
+							x: result[0].length-i+2,
+							y: result[0].length-i+2,
+							size: 3,
+							color: '#666'
+						});
+						if (i>=1) {	
+							g.edges.push({
+							id:  result[0][i],
+							source:'n'+result[0][i-1],
+							target:'n'+ result[0][i],
+							size: Math.random(),
+							color: '#ccc'
+						});
+						}
+			} 
+
+
+					g.nodes.push({
+						id: 'n'+$("#_address").val(),
+						label: $("#_address").val() ,
+						x: result[0].length+1,
+						y: result[0].length+2,
+						size: 3,
+						color: '#eb4034'
+					});
+					if (result[0][0]!=''){
+						g.edges.push({
+							id:  $("#_address").val(),
+							source:'n'+$("#_address").val(),
+							target:'n'+ result[0][0],
+							size: Math.random(),
+							color: '#ccc'
+						});
+					}
+					if (result[1][0]!=''){
+						g.edges.push({
+							id:  'e'+$("#_address").val(),
+							source:'n'+$("#_address").val(),
+							target:'n'+ result[1][0],
+							size: Math.random(),
+							color: '#ccc'
+						});
+						
+					}
 		
-   }
+				
+		s = new sigma({
+			graph: g,
+			container: 'container1'
+			});
+		document.getElementById("insTrans").innerHTML=text;
+		});	
+
+	 }
 });
