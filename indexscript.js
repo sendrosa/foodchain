@@ -2,6 +2,47 @@ $('#results').hide();
 $("#insTrans1").hide();
 $("#insTrans2").hide();
 
+    // This sample uses the Autocomplete widget to help the user select a
+    // place, then it retrieves the address components associated with that
+    // place, and then it populates the form fields with those details.
+    // This sample requires the Places library. Include the libraries=places
+    // parameter when you first load the API. For example:
+    // <script
+    // src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+    
+    var placeSearch, autocomplete;
+    
+    var componentForm = {
+      street_number: 'short_name',
+      route: 'long_name',
+      locality: 'long_name',
+      administrative_area_level_1: 'short_name',
+      country: 'long_name',
+      postal_code: 'short_name'
+    };
+    
+    function initAutocomplete() {
+      // Create the autocomplete object, restricting the search predictions to
+      // geographical location types.
+      autocomplete = new google.maps.places.Autocomplete(
+          document.getElementById('autocomplete'), {types: ['geocode']});
+    
+      // Avoid paying for data that you don't need by restricting the set of
+      // place fields that are returned to just the address components.
+      autocomplete.setFields(['address_component']);
+    
+      // When the user selects an address from the drop-down, populate the
+      // address fields in the form.
+      autocomplete.addListener('place_changed', fillInAddress);
+    }
+    
+    function fillInAddress() {
+      // Get the place details from the autocomplete object.
+      var place = autocomplete.getPlace();
+    
+      
+    }
+    
 window.addEventListener('load', function () {
 
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
@@ -34,34 +75,31 @@ console.log(web3.eth.accounts[0]);
 
 var FoodchainContract = web3.eth.contract([
 	{
-		"constant": true,
+		"constant": false,
 		"inputs": [
 			{
-				"name": "_id",
-				"type": "uint256"
-			}
-		],
-		"name": "getData",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bytes16"
-			},
-			{
-				"name": "",
-				"type": "bytes16"
-			},
-			{
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"name": "",
+				"name": "_address",
 				"type": "address"
 			}
 		],
+		"name": "descendants",
+		"outputs": [],
 		"payable": false,
-		"stateMutability": "view",
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "data",
+				"type": "address"
+			}
+		],
+		"name": "npush",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -72,210 +110,43 @@ var FoodchainContract = web3.eth.contract([
 				"type": "address"
 			}
 		],
-		"name": "getInstructor",
+		"name": "parents",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "dbrother",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
+		"constant": false,
 		"inputs": [],
-		"name": "getInstructors",
+		"name": "pop",
 		"outputs": [
 			{
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "brother",
-		"outputs": [
-			{
-				"name": "",
+				"name": "data",
 				"type": "address"
 			}
 		],
 		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "descendantnew",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"constant": false,
 		"inputs": [
 			{
-				"name": "_address",
+				"name": "descendant",
 				"type": "address"
 			}
 		],
-		"name": "getInstructors",
-		"outputs": [],
+		"name": "search",
+		"outputs": [
+			{
+				"name": "flag",
+				"type": "bool"
+			}
+		],
 		"payable": false,
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "getdescendant",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address[]"
-			},
-			{
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "instructorAccts",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "parentnew",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "gettree",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address[]"
-			},
-			{
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "getgraph",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address[]"
-			},
-			{
-				"name": "",
-				"type": "address[]"
-			},
-			{
-				"name": "",
-				"type": "address[]"
-			},
-			{
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -342,16 +213,206 @@ var FoodchainContract = web3.eth.contract([
 		],
 		"name": "instructorInfo",
 		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "brother",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "dbrother",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "descendantnew",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "getData",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bytes16"
+			},
+			{
+				"name": "",
+				"type": "bytes16"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "address"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getdescendant",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getInstructors1",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getparent",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "instructorAccts",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "parentnew",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	}
 ]);
-var Foodchain = FoodchainContract.at('0x94ab12684b94698e91e421260085405292e46349');
+var Foodchain = FoodchainContract.at('0x846558e7ededd6401840e4967bc82da19bcb2809');
 console.log(Foodchain);
 
 
 
 
 $("#button").click(function () {
-    Foodchain.setInstructor('0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000000000', $("#foodwhere").val(), $("#quantity").val(), $("#foodtype").val(), $("#ph").val(), $("#sensor1").val(), { from: account }, function (err, result) {
+    Foodchain.setInstructor('0x0000000000000000000000000000000000000000', '0x0000000000000000000000000000000000000000', $("#autocomplete").val(), $("#quantity").val(), $("#foodtype").val(), $("#ph").val(), $("#sensor1").val(), { from: account }, function (err, result) {
         console.log(err, result)
     });
     $('#results').show();
@@ -375,3 +436,6 @@ instructorEvent.watch(function (err, result) {
         $("#instructor").html(web3.toAscii(result.args.foodwhere) + ' ' + web3.toAscii(result.args.foodtype) + ' ' + result.args.quantity + ' ');
     }
 });
+
+
+

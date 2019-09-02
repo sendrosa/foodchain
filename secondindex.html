@@ -64,7 +64,7 @@
 
         <div class="form-group">
             <label for="name">Distribution where</label>
-            <input type="text" class="form-control" id="distributorwhere" placeholder="Τόπος μεταφοράς παρτίδας πχ Kavala">
+            <input type="text" class="form-control" id="autocomplete" placeholder="Τόπος μεταφοράς παρτίδας πχ Kavala">
         </div>
         <div class="form-group">
             <label for="name">Sub-Quantity</label>
@@ -75,7 +75,9 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="secondscript.js"></script>  
+    <script src="secondscript.js"></script> 
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLcjMzc1T3vsuWrA-58Va4ib_fI0tN1_g&libraries=places&callback=initAutocomplete"
+      async defer></script> 
 
   
    

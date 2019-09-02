@@ -19,34 +19,31 @@ window.ethereum.enable();
 
 var DistributorContract = web3.eth.contract([
 	{
-		"constant": true,
+		"constant": false,
 		"inputs": [
 			{
-				"name": "_id",
-				"type": "uint256"
-			}
-		],
-		"name": "getData",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bytes16"
-			},
-			{
-				"name": "",
-				"type": "bytes16"
-			},
-			{
-				"name": "",
-				"type": "uint256"
-			},
-			{
-				"name": "",
+				"name": "_address",
 				"type": "address"
 			}
 		],
+		"name": "descendants",
+		"outputs": [],
 		"payable": false,
-		"stateMutability": "view",
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "data",
+				"type": "address"
+			}
+		],
+		"name": "npush",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -57,210 +54,43 @@ var DistributorContract = web3.eth.contract([
 				"type": "address"
 			}
 		],
-		"name": "getInstructor",
+		"name": "parents",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "dbrother",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
+		"constant": false,
 		"inputs": [],
-		"name": "getInstructors",
+		"name": "pop",
 		"outputs": [
 			{
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "brother",
-		"outputs": [
-			{
-				"name": "",
+				"name": "data",
 				"type": "address"
 			}
 		],
 		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "descendantnew",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
 		"constant": false,
 		"inputs": [
 			{
-				"name": "_address",
+				"name": "descendant",
 				"type": "address"
 			}
 		],
-		"name": "getInstructors",
-		"outputs": [],
+		"name": "search",
+		"outputs": [
+			{
+				"name": "flag",
+				"type": "bool"
+			}
+		],
 		"payable": false,
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "getdescendant",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address[]"
-			},
-			{
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "instructorAccts",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "parentnew",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "gettree",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address[]"
-			},
-			{
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "getgraph",
-		"outputs": [
-			{
-				"name": "",
-				"type": "address[]"
-			},
-			{
-				"name": "",
-				"type": "address[]"
-			},
-			{
-				"name": "",
-				"type": "address[]"
-			},
-			{
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -327,16 +157,206 @@ var DistributorContract = web3.eth.contract([
 		],
 		"name": "instructorInfo",
 		"type": "event"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "brother",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "dbrother",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "descendantnew",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_id",
+				"type": "uint256"
+			}
+		],
+		"name": "getData",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bytes16"
+			},
+			{
+				"name": "",
+				"type": "bytes16"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "address"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getdescendant",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getInstructors1",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getparent",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address[]"
+			},
+			{
+				"name": "",
+				"type": "address[]"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "instructorAccts",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "parentnew",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	}
 ]);
 
-var Distributor = DistributorContract.at('0x94ab12684b94698e91e421260085405292e46349');
+var Distributor = DistributorContract.at('0x846558e7ededd6401840e4967bc82da19bcb2809');
 
 
 
 
 var items;
-var data = Distributor.getInstructors(function (err, result) {
+var data = Distributor.getInstructors1(function (err, result) {
 	items=result.length;
 
 
@@ -349,16 +369,23 @@ var data = Distributor.getInstructors(function (err, result) {
 			var cell2 = row.insertCell(1);
 			var cell3 = row.insertCell(2);
 			var cell4 = row.insertCell(3);
-
+			var cell5 = row.insertCell(4);
+			var cell6 = row.insertCell(5);
+			var x=Distributor.getparent(i, function (err, result) {
+				if (result[0][result[0].length-1]==null){
+					cell6.innerHTML = 'Root'; 
+				}
+				else{			
+						cell6.innerHTML = result[0][result[0].length-1]; 
+				}
+			});
 
 			cell1.innerHTML = result[3];
 			cell2.innerHTML = web3.toAscii((result[0]));
 			cell3.innerHTML = result[2];
 			cell4.innerHTML = web3.toAscii((result[1]));
-
-
+			cell5.innerHTML = result[4];
 		});
-
 	}
 });
 
@@ -370,4 +397,5 @@ var data = Distributor.getInstructors(function (err, result) {
       });
     });
   });
+
   
