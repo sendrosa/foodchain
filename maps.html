@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Foodchain</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="shortcut icon" type="image/png" href="/blockchain-512.png"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Food supply blockchain managment</h2>
+    <p>Supply chain traceability system. Follow the instructions</p>
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link  " href="index.html">Production</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="secondindex.html">Distribution</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="search.html">Search</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link " href="data.html">Data Table</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="maps.html">Map Trace</a>
+      </li>
+    </ul>
+  </div>
+  <div class="container">
+        <br/>
+     
+    <!-- //<form> -->
+        <div class="form-group">
+          <label for="name">Address</label>
+          <input type="text" class="form-control" id="_address" placeholder="Εισάγεται την διεύθυνση για αναζητηση πχ 0xae71a01f80b2d8b29096485a43574946631f31a9">
+        </div>
+        
+         <br/>
+         <div class="form-group" >
+          <form>
+             <div class="custom-control custom-switch">
+               <input type="checkbox"  class="custom-control-input" id="switch1">
+               <label class="custom-control-label" for="switch1">Normal map/Heat map</label>
+             </div>
+           </form> 
+     </div>
+     <br/>
+        <button type="button" class="btn btn-primary" id="button">Search</button>
+    <!-- </form> -->
+
+    <br/> <br/>
+    <h3 id="maptitle">Maps Search</h3>
+<!--The div element for the map -->
+<div id="map"></div>
+
+
+  <style type="text/css">
+          #container1 {
+             position: relative;
+             width: 100%;
+  height: 400px;
+           }
+           #map {
+   height: 400px;  /* The height is 400 pixels */
+   width: 100%;  /* The width is the width of the web page */
+  }
+        </style>
+    
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="maps.js"></script>  
+
+
+
+</body>
+</html>
