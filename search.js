@@ -110,20 +110,6 @@ window.ethereum.enable();
 			},
 			{
 				"constant": true,
-				"inputs": [],
-				"name": "getInstructors1",
-				"outputs": [
-					{
-						"name": "",
-						"type": "address[]"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
 				"inputs": [
 					{
 						"name": "",
@@ -142,7 +128,21 @@ window.ethereum.enable();
 				"type": "function"
 			},
 			{
-				"constant": false,
+				"constant": true,
+				"inputs": [],
+				"name": "getInstructors",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address[]"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
 				"inputs": [
 					{
 						"name": "descendant",
@@ -157,7 +157,34 @@ window.ethereum.enable();
 					}
 				],
 				"payable": false,
-				"stateMutability": "nonpayable",
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"name": "_address",
+						"type": "address"
+					}
+				],
+				"name": "getmaps_descedants",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address[]"
+					},
+					{
+						"name": "",
+						"type": "bytes16[]"
+					},
+					{
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -268,25 +295,6 @@ window.ethereum.enable();
 				"type": "function"
 			},
 			{
-				"constant": true,
-				"inputs": [
-					{
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "instructorAccts",
-				"outputs": [
-					{
-						"name": "",
-						"type": "address"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"constant": false,
 				"inputs": [
 					{
@@ -337,6 +345,25 @@ window.ethereum.enable();
 				"constant": true,
 				"inputs": [
 					{
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "propertiesAccts",
+				"outputs": [
+					{
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
 						"name": "_address",
 						"type": "address"
 					}
@@ -373,20 +400,6 @@ window.ethereum.enable();
 				],
 				"payable": false,
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": false,
-				"inputs": [
-					{
-						"name": "data",
-						"type": "address"
-					}
-				],
-				"name": "npush",
-				"outputs": [],
-				"payable": false,
-				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -458,7 +471,7 @@ window.ethereum.enable();
 	
 	
 	
-var Distributor = DistributorContract.at('0xcb13fb732Ec355e57e461Dbb8ee6b267EF748ADa');
+var Distributor = DistributorContract.at('0x9204dBD64f1deFa358207433b0Dd728Adb64CcB1');
 console.log(Distributor);
 
 

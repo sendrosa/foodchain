@@ -111,20 +111,6 @@ window.ethereum.enable();
             },
             {
                 "constant": true,
-                "inputs": [],
-                "name": "getInstructors1",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "address[]"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "constant": true,
                 "inputs": [
                     {
                         "name": "",
@@ -143,7 +129,21 @@ window.ethereum.enable();
                 "type": "function"
             },
             {
-                "constant": false,
+                "constant": true,
+                "inputs": [],
+                "name": "getInstructors",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address[]"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
                 "inputs": [
                     {
                         "name": "descendant",
@@ -158,7 +158,34 @@ window.ethereum.enable();
                     }
                 ],
                 "payable": false,
-                "stateMutability": "nonpayable",
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
+                        "name": "_address",
+                        "type": "address"
+                    }
+                ],
+                "name": "getmaps_descedants",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address[]"
+                    },
+                    {
+                        "name": "",
+                        "type": "bytes16[]"
+                    },
+                    {
+                        "name": "",
+                        "type": "uint256[]"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
                 "type": "function"
             },
             {
@@ -269,25 +296,6 @@ window.ethereum.enable();
                 "type": "function"
             },
             {
-                "constant": true,
-                "inputs": [
-                    {
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "instructorAccts",
-                "outputs": [
-                    {
-                        "name": "",
-                        "type": "address"
-                    }
-                ],
-                "payable": false,
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
                 "constant": false,
                 "inputs": [
                     {
@@ -338,6 +346,25 @@ window.ethereum.enable();
                 "constant": true,
                 "inputs": [
                     {
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "propertiesAccts",
+                "outputs": [
+                    {
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "constant": true,
+                "inputs": [
+                    {
                         "name": "_address",
                         "type": "address"
                     }
@@ -374,20 +401,6 @@ window.ethereum.enable();
                 ],
                 "payable": false,
                 "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "constant": false,
-                "inputs": [
-                    {
-                        "name": "data",
-                        "type": "address"
-                    }
-                ],
-                "name": "npush",
-                "outputs": [],
-                "payable": false,
-                "stateMutability": "nonpayable",
                 "type": "function"
             },
             {
@@ -459,45 +472,37 @@ window.ethereum.enable();
 	
 	
 	
-var Distributor = DistributorContract.at('0xcb13fb732Ec355e57e461Dbb8ee6b267EF748ADa');
+var Distributor = DistributorContract.at('0x9204dBD64f1deFa358207433b0Dd728Adb64CcB1');
 console.log(Distributor);
-
+var resultnew;
 
         $("#button").click(function() {
 
+
+            var flag1=0;
+
+
+            if($($("#switch1")).prop("checked") == true){
+            flag=1;
+            }else{
+            flag=0;
+            } 
+
+
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 5,
+                center: {lat: 39.0742, lng: 21.8243},
+                mapTypeId: 'hybrid'
+
+            });
+        
+           
+            
+            
+            
+            if (flag1==0){
         	var value = Distributor.getmaps($("#_address").val(), function (err, result) {
                 console.log($("#_address").val());
-            //console.log(err, result);
-            var flag1;
-
-
-if($($("#switch1")).prop("checked") == true){
-flag=1;
-}else{
-flag=0;
-} 
-
-
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 5,
-                    center: {lat: 39.0742, lng: 21.8243},
-                    mapTypeId: 'hybrid'
-
-                });
-            
-            var poly = new google.maps.Polyline({
-                strokeColor: '#000000',
-                strokeOpacity: 1.0,
-                strokeWeight: 3
-              });
-              poly.setMap(map);
-              var path = poly.getPath();
-
-            
-            
-
-              
-
       
             var geocoder = new google.maps.Geocoder();
             function maps(result,quantity){
@@ -531,14 +536,119 @@ flag=0;
 
                     maps(web3.toUtf8(result[1][i]),web3.toDecimal(result[2][i]));
                 }
-                var heatmap = new google.maps.visualization.HeatmapLayer;
+            var heatmap = new google.maps.visualization.HeatmapLayer;
                 // ({data: heat});
-              heatmap.setMap(map);
-              var heat= heatmap.getData();
+            heatmap.setMap(map);
+            var heat= heatmap.getData();
 
   
                 
 
 
-		});	
+        });	
+    
+        flag=2;
+    }
+
+    if (flag==2){
+        var values = Distributor.getData($("#_address").val(), function (err, result) {
+            var geocoder = new google.maps.Geocoder();
+            console.log(web3.toUtf8(result[0]),web3.toDecimal(result[3]))
+            function maps(result,quantity){
+                
+                var address = result;
+                    geocoder.geocode({'address': address}, function(results, status) {
+                    if (status === 'OK') {
+                        map.setCenter(results[0].geometry.location);
+                        
+                        
+                        if (flag==1){
+                            
+                            heat.push({location: results[0].geometry.location, weight: results[2]});
+                        }
+                        else{var marker = new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location,
+                            weight: 5,
+                            icon: {
+                                url: "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
+                              }
+                            });
+                            path.push(results[0].geometry.location);}
+                        
+    
+                        
+                    } else {
+                        alert('Geocode was not successful for the following reason: ' + status);
+                    }
+                    });
+            }
+            maps(web3.toUtf8(result[0]),web3.toDecimal(result[3]));
+            var heatmap = new google.maps.visualization.HeatmapLayer;
+              heatmap.setMap(map);
+              var heat= heatmap.getData();
+    
+        });	
+     
+        flag1=3;
+    }
+
+    if (flag1==3){
+        var value = Distributor.getmaps_descedants($("#_address").val(), function (err, result) {
+            console.log($("#_address").val());
+  
+        var geocoder = new google.maps.Geocoder();
+        function maps(result,quantity){
+            
+            var address = result;
+                geocoder.geocode({'address': address}, function(results, status) {
+                if (status === 'OK') {
+                    map.setCenter(results[0].geometry.location);
+                    
+                    
+                    if (flag==1){
+                        
+                        heat.push({location: results[0].geometry.location, weight: quantity});
+                    }
+                    else{var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location,
+                        weight: 5
+                        });
+                        path.push(results[0].geometry.location);}
+                    
+
+                    
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+                });
+        }
+                for (var i =0 ; i <result[0].length; i++) {
+                    console.log(web3.toDecimal(result[2][i]));
+
+                maps(web3.toUtf8(result[1][i]),web3.toDecimal(result[2][i]));
+            }
+        var heatmap = new google.maps.visualization.HeatmapLayer;
+          heatmap.setMap(map);
+          var heat= heatmap.getData();
+
+
+            
+
+
+    });	
+
+    flag=4;
+}
+
+    if(flag==4){
+        var poly = new google.maps.Polyline({
+            strokeColor: '#000000',
+            strokeOpacity: 1.0,
+            strokeWeight: 3
+        });
+        poly.setMap(map);
+        var path = poly.getPath();
+    }
 	 });
